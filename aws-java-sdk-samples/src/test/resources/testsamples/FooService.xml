@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<codeSamples>
+<sample title="Foo Sample" description="A foo sample!" id="FooSample">
+<content>String foo = "foo!";</content>
+</sample>
+<sample description="A foo sample!" id="MissingTitleSample">
+<content>String foo = "foo!";</content>
+</sample>
+<sample title="" description="A foo sample!" id="EmptyTitleSample">
+<content>String foo = "foo!";</content>
+</sample>
+<sample title="Foo Sample" id="MissingDescriptionSample">
+<content>String foo = "foo!";</content>
+</sample>
+<sample title="Foo Sample" description="" id="EmptyDescriptionSample">
+<content>String foo = "foo!";</content>
+</sample>
+<sample title="Foo Sample" description="A foo sample!" id="MissingContentSample">
+</sample>
+<sample title="Foo Sample" description="A foo sample!" id="EmptyContentSample">
+<content></content>
+</sample>
+</codeSamples>
