@@ -1,0 +1,5 @@
+AWS SDK for Java Samples
+Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+This product includes software developed by
+Amazon Technologies, Inc (http://www.amazon.com/).
