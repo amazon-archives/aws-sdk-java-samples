@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.amazonaws</groupId>
     <artifactId>aws-java-sdk-samples-pom</artifactId>
-    <version>1.0.12-SNAPSHOT</version>
+    <version>1.0.12</version>
   </parent>
   <groupId>com.amazonaws</groupId>
   <artifactId>aws-java-sdk-handwritten-samples</artifactId>
-  <version>1.0.12-SNAPSHOT</version>
+  <version>1.0.12</version>
   <name>aws-java-sdk-handwritten-samples</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -19,7 +19,7 @@
       <plugin>
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-sample-extractor</artifactId>
-        <version>1.0.12-SNAPSHOT</version>
+        <version>1.0.12</version>
         <configuration>
         	<sourceExtension>java</sourceExtension>
         	<sampleSubDir>/samples</sampleSubDir>
