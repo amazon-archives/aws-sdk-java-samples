@@ -43,7 +43,7 @@
   </scm>
   <distributionManagement>
     <repository>
-      <id>nexus</id>
+      <id>sonatype-nexus-staging</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
@@ -127,7 +127,7 @@
                </execution>
             </executions>
             <configuration>
-              <serverId>nexus</serverId>
+              <serverId>sonatype-nexus-staging</serverId>
               <nexusUrl>https://oss.sonatype.org</nexusUrl>
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
