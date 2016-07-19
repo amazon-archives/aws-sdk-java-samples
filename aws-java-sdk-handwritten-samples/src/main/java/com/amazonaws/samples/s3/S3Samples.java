@@ -34,7 +34,7 @@ public class S3Samples {
         //TITLE:Create an S3 client
         //DESCRIPTION:Create your credentials file at ~/.aws/credentials (C:\Users\USER_NAME\.aws\credentials for Windows users)
         AmazonS3 s3 = new AmazonS3Client();
-        Region usWest2 = Region.getRegion(Regions.US_WEST_2);
+        Region usWest2 = com.amazonaws.regions.Region.getRegion(Regions.US_WEST_2);
         s3.setRegion(usWest2);
         //END_SAMPLE
 
