@@ -74,6 +74,7 @@ public class SamplesGenerator {
         String packageName = model.getMetadata().getPackageName();
         writeLine(String.format("import %s.*;", packageName));
         writeLine(String.format("import %s.model.*;\n", packageName));
+        writeLine("import java.util.*;\n");
         writeLine("import java.nio.*;\n");
         writeLine(String.format("public class %sGeneratedSamples {", serviceName));
 
@@ -213,8 +214,10 @@ public class SamplesGenerator {
             return value.toLowerCase();
         } else if (type.equals("Long")) {
             return value + "L";
+        } else if (type.equals("Date")) {
+            return String.format("new Date(\"%s\")", StringEscapeUtils.escapeJava(value));
         } else if (type.equals("ByteBuffer")) {
-            return String.format("ByteBuffer.wrap(\"%s\".getBytes())", StringEscapeUtils.escapeJava(value)); 
+            return String.format("ByteBuffer.wrap(\"%s\".getBytes())", StringEscapeUtils.escapeJava(value));
         } else {
             return value;
         }
