@@ -131,7 +131,7 @@ public class SamplesGenerator {
             StringBuilder assignmentValue = new StringBuilder();
             getAssignmentValue(assignmentValue, node.get(fieldName), memberModel);
 
-            if (comments.containsKey(fieldName)) {
+            if (comments != null && comments.containsKey(fieldName)) {
                 writeLine("//" + comments.get(fieldName));
             }
 
@@ -214,6 +214,10 @@ public class SamplesGenerator {
             return value.toLowerCase();
         } else if (type.equals("Long")) {
             return value + "L";
+        } else if (type.equals("Double")) {
+            return value + "d";
+        } else if (type.equals("Float")) {
+            return value + "f";
         } else if (type.equals("Date")) {
             return String.format("new Date(\"%s\")", StringEscapeUtils.escapeJava(value));
         } else if (type.equals("ByteBuffer")) {
