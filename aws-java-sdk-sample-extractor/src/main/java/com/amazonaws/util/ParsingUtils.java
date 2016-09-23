@@ -136,7 +136,7 @@ public final class ParsingUtils {
      */
     public static String assertFieldHasContent(final String field,
             final String value) {
-        if (value == null || value.isEmpty()) {
+        if (!hasContent(value)) {
             throw new SampleParsingException(
                     String.format("Required field %s was not provided!",
                             field));
@@ -144,4 +144,35 @@ public final class ParsingUtils {
         return value;
     }
 
+    /**
+     * Checks if the specified sample property value is null or empty, and logs
+     * it as missing if it is.
+     *
+     * @param sampleId
+     *            The sampleId
+     * @param field
+     *            name of field
+     * @param value
+     *            value of field
+     * @return True if the value was empty, false otherwise.
+     */
+    public static boolean checkAndLogIfNoContent(String sampleId, String field, String value) {
+        if (!hasContent(value)) {
+            System.err.println(String.format("Warning: Sample '%s' does not provide field '%s'",
+                    sampleId, field));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * True if the given string is not null and not empty.
+     *
+     * @param str
+     *           The string.
+     * @return True if the string is not null and not empty.
+     */
+    private static boolean hasContent(String str) {
+        return str != null && !str.isEmpty();
+    }
 }
