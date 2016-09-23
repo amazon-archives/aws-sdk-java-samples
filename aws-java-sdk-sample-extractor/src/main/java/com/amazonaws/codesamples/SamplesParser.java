@@ -149,20 +149,24 @@ public class SamplesParser {
                     curSample = new CodeSample(sampleId, serviceName);
                 } else if (endSampleMatcher.find()) {
                     if (inSample) {
-                        ParsingUtils.assertFieldHasContent("title",
-                                curSample.getTitle());
-                        ParsingUtils.assertFieldHasContent("description",
-                                curSample.getDescription());
-                        ParsingUtils.assertFieldHasContent("content",
-                                curSample.getFormattedCode());
-
                         if (hidden) {
                             throw new SampleParsingException(
                                     "Sample was still hidden when END_SAMPLE tag was encountered",
                                     sourceFile, reader.getLineNumber());
                         }
 
-                        samples.add(curSample);
+                        String sampleId = curSample.getId();
+
+                        boolean valid = !ParsingUtils.checkAndLogIfNoContent(sampleId, "title", curSample.getTitle())
+                                && !ParsingUtils.checkAndLogIfNoContent(sampleId, "description", curSample.getDescription())
+                                && !ParsingUtils.checkAndLogIfNoContent(sampleId, "content", curSample.getFormattedCode());
+                        if (valid) {
+                            samples.add(curSample);
+                        } else {
+                            System.err.println(String.format("Omitted sample '%s' for service '%s'"
+                                    + " because it does not contain all required fields",
+                                    sampleId, curSample.getServiceName()));
+                        }
                         inSample = false;
                     } else {
                         throw new SampleParsingException(

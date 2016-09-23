@@ -1,6 +1,7 @@
 package com.amazonaws.codesamples;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static com.amazonaws.codesamples.SampleExtractorTestUtils.getSampleFile;
 
 import java.io.File;
@@ -91,22 +92,22 @@ public class SamplesParserTest {
         SamplesParser.getSamples(sampleFile);
     }
 
-    @Test(expected = SampleParsingException.class)
+    @Test
     public void sampleNoDescription() throws Exception {
         File sampleFile = getSampleFile("NoDescriptionSample.java");
-        SamplesParser.getSamples(sampleFile);
+        assertTrue(SamplesParser.getSamples(sampleFile).isEmpty());
     }
 
-    @Test(expected = SampleParsingException.class)
+    @Test
     public void sampleNoTitle() throws Exception {
         File sampleFile = getSampleFile("NoTitleSample.java");
-        SamplesParser.getSamples(sampleFile);
+        assertTrue(SamplesParser.getSamples(sampleFile).isEmpty());
     }
 
-    @Test(expected = SampleParsingException.class)
+    @Test
     public void sampleNoContent() throws Exception {
         File sampleFile = getSampleFile("NoContentSample.java");
-        SamplesParser.getSamples(sampleFile);
+        assertTrue(SamplesParser.getSamples(sampleFile).isEmpty());
     }
 
 }
