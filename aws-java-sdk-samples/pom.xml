@@ -83,6 +83,12 @@
       <optional>false</optional>
     </dependency>
     <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
+      <version>1.11.49</version>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
       <groupId>sun.jdk</groupId>
       <artifactId>tools</artifactId>
       <version>1.8</version>
