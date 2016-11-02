@@ -76,11 +76,6 @@
 	    <version>3.10.0</version>
     </dependency>
     <dependency>
-	    <groupId>com.amazonaws</groupId>
-	    <artifactId>aws-java-sdk</artifactId>
-	    <version>[1.11,)</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>3.0</version>
@@ -99,7 +94,12 @@
     <dependency>
     	<groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-code-generator</artifactId>
-        <version>[1.11,)</version>
+        <version>1.11.49</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-models</artifactId>
+      <version>[1.11,)</version>
     </dependency>
   </dependencies>
 </project>
