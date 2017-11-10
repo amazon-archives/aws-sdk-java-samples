@@ -41,6 +41,9 @@
     <developerConnection>scm:git:git@github.com:aws/aws-sdk-java-samples.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
+  <properties>
+    <awsjavasdk.version>RELEASE</awsjavasdk.version>
+  </properties>
   <distributionManagement>
     <repository>
       <id>sonatype-nexus-staging</id>

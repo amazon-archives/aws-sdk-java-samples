@@ -52,30 +52,31 @@ public class SampleGenerationRunner extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             for (IntermediateModel model : IntermediateModelRetriever
-                    .getDependencyIntermediateModels()) {
+                .getDependencyIntermediateModels()) {
                 if (!model.getExamples().getOperationExamples().isEmpty()) {
                     SamplesGenerator writer = new SamplesGenerator(model);
-                    GeneratedSamplesClassWriter.writeSamples(projectSourceDir + "/samples", model
-                            .getMetadata().getSyncInterface(), writer
-                            .getGeneratedSamples());
+                    GeneratedSamplesClassWriter.writeSamples(projectSourceDir + "/samples/",
+                                                             model
+                                                                 .getMetadata().getSyncInterface(), writer
+                                                                 .getGeneratedSamples());
                 }
             }
 
             executeMojo(
-                    plugin(
-                        groupId("com.amazonaws"),
-                        artifactId("aws-java-sdk-sample-extractor"),
-                        version("LATEST")
-                    ),
-                    goal("ExtractSamples"),
-                    configuration(
-                            element("sourceExtension", "java"),
-                            element("sampleSubDir", "/samples")
-                    ),
-                    executionEnvironment(
-                        mavenProject,
-                        mavenSession,
-                        pluginManager));
+                plugin(
+                    groupId("com.amazonaws"),
+                    artifactId("aws-java-sdk-sample-extractor"),
+                    version("LATEST")
+                ),
+                goal("ExtractSamples"),
+                configuration(
+                    element("sourceExtension", "java"),
+                    element("sampleSubDir", "/samples")
+                ),
+                executionEnvironment(
+                    mavenProject,
+                    mavenSession,
+                    pluginManager));
 
         } catch (IOException e) {
             throw new MojoFailureException("Failed to generate samples", e);

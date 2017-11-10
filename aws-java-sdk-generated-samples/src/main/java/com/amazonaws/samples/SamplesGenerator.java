@@ -68,24 +68,32 @@ public class SamplesGenerator {
      *
      * @return generated samples content
      */
-    public String getGeneratedSamples() throws SampleGenerationException {
+    public String getGeneratedSamples() {
         String serviceName = model.getMetadata().getSyncInterface();
 
         String packageName = model.getMetadata().getPackageName();
-        writeLine(String.format("import %s.*;", packageName));
+        writeLine("package com.amazonaws.codesamples.samples;\n");
+        writeLine(String.format("import %s.%s;", packageName, serviceName));
+        writeLine(String.format("import %s.%sClientBuilder;", packageName, serviceName));
         writeLine(String.format("import %s.model.*;\n", packageName));
         writeLine("import java.util.*;\n");
         writeLine("import java.nio.*;\n");
+        writeLine("import java.io.*;");
         writeLine(String.format("public class %sGeneratedSamples {", serviceName));
 
         model.getExamples().getOperationExamples().forEach((k, v) -> emitCode(serviceName, k, v));
 
         writeLine("}");
 
-        return formatter.format(sb.toString());
+        return formatter.apply(sb.toString());
     }
 
     private void emitCode(final String serviceName, final String operationName, final List<Example> examples) {
+
+        if (model.getOperation(operationName).isDeprecated()) {
+            return;
+        }
+
         Metadata metadata = model.getMetadata();
         OperationModel operationModel = model.getOperations().get(operationName);
 
@@ -97,14 +105,25 @@ public class SamplesGenerator {
         String inputType = operationModel.getInput().getVariableType();
         ShapeModel inputModel = model.getShapes().get(inputType);
 
-        for (int i=0; i<examples.size(); i++) {
+        for (int i = 0; i < examples.size(); i++) {
             Example example = examples.get(i);
+
+            // There are some services literally providing "null" example
+            if (example == null) {
+                continue;
+            }
+
             writeLine(String.format("public void %s_%s() {", operationName, i+1));
             writeLine(String.format("//BEGIN_SAMPLE:%s.%s", serviceName, operationName));
             writeLine("//TITLE:" + example.getTitle());
-            writeLine("//DESCRIPTION:" + example.getDescription());
 
-            writeLine(String.format("%s client = new %s();", metadata.getSyncInterface(), metadata.getSyncClient()));
+            if (example.getDescription() != null && example.getDescription().isEmpty()) {
+                writeLine("//DESCRIPTION:" + operationName);
+            } else {
+                writeLine("//DESCRIPTION:" + example.getDescription());
+            }
+
+            writeLine(String.format("%s client = %sBuilder.standard().build();", metadata.getSyncInterface(), metadata.getSyncClient()));
             writeLine(String.format("%1$s request = new %1$s()", inputType));
 
             getRequestAssignments(example.getInput(), inputModel, example.getComments().getInputComments());
@@ -152,6 +171,10 @@ public class SamplesGenerator {
         } else if (memberModel.isList()) {
             ListModel listModel = memberModel.getListModel();
             Iterator<JsonNode> iter = node.iterator();
+
+            if (!iter.hasNext()) {
+                sb.append("new ArrayList()");
+            }
 
             while (iter.hasNext()) {
                 JsonNode entry = iter.next();
@@ -222,13 +245,15 @@ public class SamplesGenerator {
             return String.format("new Date(\"%s\")", StringEscapeUtils.escapeJava(value));
         } else if (type.equals("ByteBuffer")) {
             return String.format("ByteBuffer.wrap(\"%s\".getBytes())", StringEscapeUtils.escapeJava(value));
+        } else if (type.equals("InputStream")) {
+            return String.format("new ByteArrayInputStream(\"%s\".getBytes())", StringEscapeUtils.escapeJava(value));
         } else {
             return value;
         }
     }
 
     private void writeLine(final String line) {
-        sb.append(line + "\n");
+        sb.append(line.replace("\n", "") + "\n");
     }
 
     private String firstCharToUpper(final String str) {
