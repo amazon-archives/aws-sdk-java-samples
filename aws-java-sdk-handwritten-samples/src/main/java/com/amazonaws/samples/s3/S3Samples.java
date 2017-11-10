@@ -1,5 +1,6 @@
 package com.amazonaws.samples.s3;
 
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ public class S3Samples {
         //BEGIN_SAMPLE:AmazonS3.CreateClient
         //TITLE:Create an S3 client
         //DESCRIPTION:Create your credentials file at ~/.aws/credentials (C:\Users\USER_NAME\.aws\credentials for Windows users)
-        AmazonS3 s3 = new AmazonS3Client();
+        AmazonS3 s3 = AmazonS3ClientBuilder.standard().build();
         Region usWest2 = com.amazonaws.regions.Region.getRegion(Regions.US_WEST_2);
         s3.setRegion(usWest2);
         //END_SAMPLE
